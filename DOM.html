@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .subsribe-button{
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .subscribed {
+            background-color: green;
+            color: black;
+            font-weight: bold;
+        }
+
+        .input {
+            font-size: 16px;
+            padding: 10px;
+
+        }
+
+        .calculate-button {
+            background-color: green;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+    <p>Tombol Subscribe</p> 
+    <button class="subsribe-button" onclick="subscribe()">Subscribe</button>
+    <br>
+    <br>
+    <p>shipping calculator</p>
+    <p>under 40$ +10$</p>
+    <p>>=40$ FREE</p>
+    <input type="number" name="total" id="total" placeholder="Enter your total" class="input" onkeydown="
+        if(event.keyCode === 13) {
+            console.log(event.keyCode);
+            calculateShipping();
+        }">
+    <button onclick="calculateShipping()" class="calculate-button">Calculate</button>
+    <p class="output-total"></p>
+
+<script>
+    function subscribe() {
+          const buttonElement= document.querySelector('.subsribe-button');
+        if(buttonElement.innerHTML === 'Subscribe') {
+            buttonElement.innerHTML = 'Unsubscribe';
+            buttonElement.classList.add('subscribed');
+        } else {
+            buttonElement.innerHTML = 'Subscribe';
+            buttonElement.classList.remove('subscribed');
+        }
+    }
+
+   function calculateShipping() {
+    const inputElement = document.querySelector('.input');
+       const outputElement = document.querySelector('.output-total');
+       const total = parseInt(inputElement.value);
+       if(total < 40) {
+           outputElement.innerHTML = `Total: ${total + 10}`;
+       } else {
+           outputElement.innerHTML = `Total: ${total}`;
+       }
+   }
+</script>
+</body>
+</html>

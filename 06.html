@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Rock Paper Scissor</h1>
+    <button onclick="playGame('rock')" style="font-size: 24px; padding: 10px 20px; margin: 5px;">✊ Rock</button>
+    <button onclick="playGame('paper')" style="font-size: 24px; padding: 10px 20px; margin: 5px;">✋ Paper</button>
+    <button onclick="playGame('scissor')" style="font-size: 24px; padding: 10px 20px; margin: 5px;">✌️ Scissor</button>
+    <button onclick="resetScore()" style="font-size: 24px; padding: 10px 20px; margin: 5px;">Reset Scores</button>
+
+    <p class="player-state">You Win</p>
+    <p class="info"></p>
+    <p class="scores"></p>
+</body>
+
+
+</html>
+<script>
+console.log(localStorage.getItem('score'));
+const score = JSON.parse(localStorage.getItem('score')) || { wins: 0, loses: 0, ties: 0 };
+    
+    function playGame(playerMove) {
+        const randomNum = Math.random();
+        let comMove = '';
+        let playerState = '';
+
+        if (randomNum < 1/3) {
+            comMove = 'rock';
+        } else if (1/3 < randomNum < 2/3) {
+            comMove = 'paper';
+        } else {
+            comMove = 'scissor';
+        }
+        console.log(comMove);
+
+        if (comMove === playerMove) {
+            score.ties++;
+            playerState = 'It\'s a tie!';
+        } else if (
+            (comMove === 'rock' && playerMove === 'scissor') ||
+            (comMove === 'paper' && playerMove === 'rock') ||
+            (comMove === 'scissor' && playerMove === 'paper')
+        ) {
+            score.loses++;
+            playerState = 'You Lose!';
+        } else {
+            score.wins++;
+            playerState = 'You Win!';
+        }
+    localStorage.setItem('score', JSON.stringify(score));
+    document.querySelector('.info').innerHTML = `You picked ${playerMove} & computer picked ${comMove}`;
+    document.querySelector('.player-state').innerHTML = playerState;
+    document.querySelector('.scores').innerHTML = `Wins : ${score.wins} Loses : ${score.loses} Ties : ${score.ties}`;
+    }
+    
+
+
+    function resetScore() {
+        score.wins = 0;
+        score.loses = 0;
+        score.ties = 0;
+        document.querySelector('.info').innerHTML = ``;
+        document.querySelector('.player-state').innerHTML = ``;
+        document.querySelector('.scores').innerHTML = `Wins : 0 Loses : 0 Ties : 0`;
+        localStorage.setItem('score', JSON.stringify(score));
+    }
+
+    
+document.querySelector('.scores').innerHTML = `Wins : ${score.wins} Loses : ${score.loses} Ties : ${score.ties}`;
+</script>

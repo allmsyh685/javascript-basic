@@ -70,6 +70,6 @@ const score = JSON.parse(localStorage.getItem('score')) || { wins: 0, loses: 0, 
         localStorage.setItem('score', JSON.stringify(score));
     }
 
-    
+    console.log(score); 
 document.querySelector('.scores').innerHTML = `Wins : ${score.wins} Loses : ${score.loses} Ties : ${score.ties}`;
 </script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .todo-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            gap: 8px;
+        }
+        .todo-item select {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TODO - LIST</h1>
+    <input type="text" id="todo" placeholder="Enter your todo">
+    <input type="date" id="todo-date">
+    <input type="time" id="todo-time">
+    <button onclick="addTodo()">Add Todo</button>
+    <ol id="todos"></ol>
+
+    <script>
+        const todoList = [];
+        addTodo = () => {
+            const todo = document.querySelector('#todo').value;
+            const date = document.querySelector('#todo-date').value;
+            const time = document.querySelector('#todo-time').value;
+            if (todo && date && time) {
+                const dateTime = `${date} ${time}`;
+                todoList.push({ text: todo, dateTime: dateTime });
+                document.querySelector('#todo').value = '';
+                document.querySelector('#todo-date').value = '';
+                document.querySelector('#todo-time').value = '';
+                renderTodos();
+            }
+        }
+
+        renderTodos = () => {
+            const todosElement = document.querySelector('#todos');
+            todosElement.innerHTML = '';
+            todoList.forEach(todo => {
+                const button = document.createElement('button');
+                button.innerHTML = 'Delete';
+                button.onclick = () => {
+                    const index = todoList.indexOf(todo);
+                    todoList.splice(index, 1);
+                    renderTodos();
+                }
+                const li = document.createElement('li');
+                const div = document.createElement('div');
+                div.className = 'todo-item';
+                li.innerHTML = `${todo.text} <small>(${todo.dateTime})</small>`;
+                const select = document.createElement('select');
+                select.innerHTML = `
+                    <option value="Done">Done</option>
+                    <option value="Not Done">Not Done</option>
+                `;
+                div.appendChild(li);
+                div.appendChild(button);
+                div.appendChild(select);
+                todosElement.appendChild(div);
+            });
+        }
+    </script>
+
+</body>
+</html>
